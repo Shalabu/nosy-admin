@@ -43,7 +43,8 @@ public class DefaultUserService_Tmp implements UserService_Tmp {
             throw new GeneralException("User already exists in database please try another email");
 
         // @TODO what should we do when the operation fails? The user was already added to keycloak.
-        return Optional.of(userRepository.saveAndFlush(user));
+        User newUser = userRepository.saveAndFlush(user);
+        return (newUser != null) ? Optional.of(newUser) : Optional.empty();
     }
 
     @Override
@@ -53,7 +54,7 @@ public class DefaultUserService_Tmp implements UserService_Tmp {
     }
 
     @Override
-    public Optional<User> deleteUser(String email) {
+    public Optional<User> deleteUserByEmail(String email) {
         Optional<User> deletedUser = getUserByEmail(email);
         // @TODO this method should return success or error.
         keycloakClient.deleteUsername(email);

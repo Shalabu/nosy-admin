@@ -43,7 +43,14 @@ public class UserController_Tmp {
 
     @PostMapping
     public UserDto addUser(@RequestBody UserDto userDto) throws Exception {
-        return userService.createUser( conversion.convertToUser(userDto) )
+        return userService.createUser(conversion.convertToUser(userDto))
+                .map(conversion::convertToUserDto)
+                .orElseThrow(Exception::new);
+    }
+
+    @DeleteMapping
+    public UserDto deleteUserByEmail(@Email String email) throws Exception {
+        return userService.deleteUserByEmail(email)
                 .map(conversion::convertToUserDto)
                 .orElseThrow(Exception::new);
     }

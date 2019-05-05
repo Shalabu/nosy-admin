@@ -13,7 +13,6 @@ import java.util.List;
 @Transactional
 @Repository
 @CrossOrigin
-
 public interface EmailTemplateRepository extends JpaRepository<EmailTemplate, String> {
     @Query("from EmailTemplate where email_template_name=:emailTemplateName and " +
             "input_system_id=:inputSystemId")

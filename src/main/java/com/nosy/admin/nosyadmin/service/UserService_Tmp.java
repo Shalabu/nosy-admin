@@ -15,5 +15,5 @@ public interface UserService_Tmp {
 
     Optional<User> updateUser(String email, User user);
 
-    Optional<User> deleteUser(String email);
+    Optional<User> deleteUserByEmail(String email);
 }

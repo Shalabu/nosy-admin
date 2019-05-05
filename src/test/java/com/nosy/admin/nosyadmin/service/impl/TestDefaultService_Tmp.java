@@ -145,13 +145,12 @@ public class TestDefaultService_Tmp {
         }};
 
         // mock
-        when(keycloakClient.registerNewUser(aUser)).thenReturn(false);
+        when(keycloakClient.registerNewUser(aUser)).thenReturn(true);
         when(userRepository.saveAndFlush(aUser)).thenReturn(null);
 
         Optional<User> newUser = userService.createUser(aUser);
 
         assertFalse(newUser.isPresent());
-        assertNull(newUser.get());
 
         verify(keycloakClient, times(1)).registerNewUser(aUser);
         verify(userRepository, times(1)).saveAndFlush(aUser);
@@ -190,7 +189,7 @@ public class TestDefaultService_Tmp {
         when(userRepository.findById(email)).thenReturn(Optional.empty());
 
         // test
-        Optional<User> delUser = userService.deleteUser(email);
+        Optional<User> delUser = userService.deleteUserByEmail(email);
 
         assertFalse(delUser.isPresent());
         verify(userRepository, times(1)).findById(email);
@@ -213,7 +212,7 @@ public class TestDefaultService_Tmp {
         when(userRepository.findById(email)).thenReturn(Optional.of(aUser));
 
         // test
-        Optional<User> delUser = userService.deleteUser(email);
+        Optional<User> delUser = userService.deleteUserByEmail(email);
 
         assertTrue(delUser.isPresent());
         assertEquals(aUser, delUser.get());

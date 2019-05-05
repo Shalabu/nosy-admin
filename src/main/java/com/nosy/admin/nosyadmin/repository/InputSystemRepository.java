@@ -12,7 +12,6 @@ import javax.transaction.Transactional;
 @Transactional
 @Repository
 @CrossOrigin
-
 public interface InputSystemRepository extends JpaRepository<InputSystem, String> {
 
     @Query("from InputSystem where email=:email and " +
